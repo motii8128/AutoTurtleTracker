@@ -1,0 +1,2 @@
+[workspace]
+members = ["imu_localizer", "joy_twist_rust", "velocity_controller", "zikoichi_controller"]
