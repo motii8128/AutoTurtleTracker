@@ -16,3 +16,11 @@ flowchart LR
     /real/cmd_vel --> ZikoichiController
     ZikoichiController --> serial
 ```
+
+
+# Usage
+clone haya_imu_ros2
+```
+git clone https://github.com/motii8128/haya_imu_ros2.git
+git clone https://github.com/soarbear/haya_imu_msgs.git
+```
