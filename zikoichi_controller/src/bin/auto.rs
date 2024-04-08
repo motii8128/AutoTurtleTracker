@@ -21,16 +21,16 @@ async fn main()->Result<(), DynError>
     let mut turtle_sub = node.create_subscriber::<nav_msgs::msg::Odometry>("/turtle1/odom", None)?;
     let mut euler_sub = node.create_subscriber::<geometry_msgs::msg::Vector3>("/euler", None)?;
     //let mut i_odom_sub = node.create_subscriber::<nav_msgs::msg::Odometry>("/imu/odom", None)?;
-    let log = Logger::new(node.get_name());
+    let log = Logger::new(node.get_name().unwrap().as_str());
 
-    let port_name = get_str_parameter(node.get_name(), "port_name", "/dev/ttyACM0");
+    let port_name = get_str_parameter(node.get_name().unwrap().as_str(), "port_name", "/dev/ttyACM0");
 
     let mut port = serialport::new(port_name, 115200).timeout(std::time::Duration::from_millis(100)).open().unwrap();
 
 
     let diagonal = 1.0;
 
-    pr_info!(log, "Start {}", node.get_name());
+    pr_info!(log, "Start {}", node.get_name().unwrap());
 
     loop {
         let t_odom = turtle_sub.recv().await.unwrap();

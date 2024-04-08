@@ -14,17 +14,17 @@ async fn main()->Result<(), DynError>
 {
     let ctx = Context::new()?;
     let node = ctx.create_node("JoyTwistRust", None, Default::default())?;
-    let log = Logger::new(node.get_name());
+    let log = Logger::new(node.get_name().unwrap().as_str());
 
     let publisher = node.create_publisher::<geometry_msgs::msg::Twist>("/cmd_vel", None)?;
 
-    let mode_name = get_str_parameter(node.get_name(), "mode", "ble");
-    let enable_debug = get_bool_parameter(node.get_name(), "enable_debug", false);
+    let mode_name = get_str_parameter(node.get_name().unwrap().as_str(), "mode", "ble");
+    let enable_debug = get_bool_parameter(node.get_name().unwrap().as_str(), "enable_debug", false);
 
     let mode = name_to_mode(&mode_name);
     let mut driver = DualShock4Driver::new(mode).unwrap();
 
-    pr_info!(log, "Start {}", node.get_name());
+    pr_info!(log, "Start {}", node.get_name().unwrap());
     loop {
         let con = driver.read().await.unwrap();
 

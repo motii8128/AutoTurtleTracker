@@ -17,16 +17,16 @@ async fn main()->Result<(), DynError>
     let ctx = Context::new()?;
     let node = ctx.create_node("ZikoichiManual", None, Default::default())?;
     let mut subscriber = node.create_subscriber::<geometry_msgs::msg::Twist>("/cmd_vel", None)?;
-    let log = Logger::new(node.get_name());
+    let log = Logger::new(node.get_name().unwrap().as_str());
 
-    let port_name = get_str_parameter(node.get_name(), "port_name", "/dev/ttyACM0");
-    let rate = get_f64_parameter(node.get_name(), "power_rate", 1.0);
+    let port_name = get_str_parameter(node.get_name().unwrap().as_str(), "port_name", "/dev/ttyACM0");
+    let rate = get_f64_parameter(node.get_name().unwrap().as_str(), "power_rate", 1.0);
 
     let mut port = serialport::new(port_name, 115200).timeout(std::time::Duration::from_millis(100)).open().unwrap();
 
     let diagonal = ((2.0_f32).sqrt() / 2.0) as f64;
 
-    pr_info!(log, "Start {}", node.get_name());
+    pr_info!(log, "Start {}", node.get_name().unwrap());
 
     loop {
         let get_msg = subscriber.recv().await.unwrap();
