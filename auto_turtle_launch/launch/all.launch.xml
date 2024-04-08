@@ -1,5 +1,6 @@
 <launch>
-    <include file="$(find-pkg-share turtle_odometer)/launch/test.launch.xml"/>
+    <include file="$(find-pkg-share auto_turtle_launch)/launch/imu_localizer.launch.xml"/>
+    <include file="$(find-pkg-share auto_turtle_launch)/launch/turtle_odometer.launch.xml"/>
 
     <node pkg="joy_twist_rust" exec="joy_twist_rust">
         <remap from="/cmd_vel" to="/turtle1/cmd_vel"/>
@@ -11,7 +12,5 @@
     <node pkg="zikoichi_controller" exec="auto">
         <remap from="/turtle1/odom" to="/turtle1/odom"/>
         <remap from="/imu/odom" to="/imu/odom"/>
-    </node>
-
-    
+    </node>    
 </launch>
