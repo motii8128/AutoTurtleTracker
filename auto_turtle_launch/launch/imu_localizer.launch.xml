@@ -1,0 +1,9 @@
+<launch>
+    <include file="$(find-pkg-share haya_imu_ros2)/launch/test.launch.xml"/>
+    <node pkg="imu_localizer" exec="imu_localizer">
+    	<remap from="/odom" to="/imu/odom"/>
+    	
+    	<param name="delta_milli" value="10"/>
+    	<param name="odom_frame_id" value="odom"/>
+    </node>
+</launch>
