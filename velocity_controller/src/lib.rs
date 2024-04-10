@@ -21,11 +21,12 @@ pub async fn velocity_controller(
 
     let mut x_pid = PID::new(0.1, 0.1, 0.1);
     let mut y_pid = PID::new(0.1, 0.1, 0.1);
+    let mut rotation_pid = PID::new(0.1, 0.1, 0.1);
 
     let mut prev_vel_x = 0.0;
     let mut prev_vel_y = 0.0;
 
-    let delta_sec = cmd_freqency as f64 * 10e-4;
+    let delta_sec = 1.0 / cmd_freqency as f64 * 10e-4;
 
     pr_info!(log, "Start VelocityController on {}Hz", cmd_freqency);
     loop {
@@ -44,6 +45,6 @@ pub async fn velocity_controller(
         prev_vel_x = target_vel_x;
         prev_vel_y = target_vel_y;
 
-        std::thread::sleep(std::time::Duration::from_millis(cmd_freqency))
+        std::thread::sleep(std::time::Duration::from_millis(delta_sec as u64))
     }
 }
